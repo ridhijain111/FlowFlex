@@ -1,0 +1,29 @@
+# Dependencies / build output
+node_modules/
+target/
+bin/
+dist/
+
+# Java
+*.class
+
+# Database files
+backend/data/
+*.mv.db
+*.lock.db
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.*
+
+# VS Code / IDE
+.vscode/
+*.code-workspace
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
