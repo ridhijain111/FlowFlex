@@ -48,7 +48,12 @@ public class FinanceService {
     }
     public SavingsBuffer savings() { return new SavingsBuffer(SAVINGS, TARGET_SAVINGS, ESSENTIALS, round(SAVINGS / ESSENTIALS), round(Math.min(100, SAVINGS / TARGET_SAVINGS * 100))); }
     public Loan loan() { double progress = CONTRIBUTED / (CONTRIBUTED + LOAN) * 100; return new Loan(LOAN, MONTHLY_TARGET, CONTRIBUTED, round(progress), List.of(new RepaymentOption("HIGH", 400, "Use stronger days to reduce the balance faster"), new RepaymentOption("NORMAL", 150, "Make a steady contribution without squeezing essentials"), new RepaymentOption("LOW", 0, "Keep cash available for essential expenses"))); }
-    public Dashboard dashboard() { Analytics a = analytics(); List<IncomeRecord> all = records(); return new Dashboard("Ravi", "Delivery worker", all.get(all.size()-1).getAmount(), recommendation(), a.volatilityScore(), savings(), loan(), shock()); }
+    public Dashboard dashboard() {
+        Analytics a = analytics();
+        List<IncomeRecord> all = records();
+        double today = all.isEmpty() ? 0 : all.get(all.size() - 1).getAmount();
+        return new Dashboard("Ravi", "Delivery worker", today, recommendation(), a.volatilityScore(), savings(), loan(), shock());
+    }
     private List<Double> amounts(List<IncomeRecord> values) { return values.stream().map(IncomeRecord::getAmount).toList(); }
     private double average(List<Double> values) { return values.stream().mapToDouble(Double::doubleValue).average().orElse(0); }
     private double round(double value) { return Math.round(value * 100.0) / 100.0; }

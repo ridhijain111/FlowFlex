@@ -2,6 +2,7 @@ package com.flowflex.api;
 
 import java.time.LocalDate;
 import java.util.List;
+import jakarta.validation.constraints.DecimalMin;
 
 public final class ApiModels {
     private ApiModels() {}
@@ -13,6 +14,6 @@ public final class ApiModels {
     public record RepaymentOption(String status, double amount, String description) {}
     public record ShockStatus(boolean shockMode, double recentAverage, double historicalAverage, String title, String message, List<String> actions) {}
     public record Dashboard(String name, String occupation, double todaysIncome, Recommendation recommendation, double volatilityScore, SavingsBuffer savingsBuffer, Loan loan, ShockStatus shockStatus) {}
-    public record IncomeRequest(LocalDate date, double amount) {}
+    public record IncomeRequest(LocalDate date, @DecimalMin(value = "0.0", message = "Income cannot be negative") double amount) {}
     public record Acceptance(boolean accepted, Recommendation recommendation, String message) {}
 }
